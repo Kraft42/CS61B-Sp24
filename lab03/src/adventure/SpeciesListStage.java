@@ -91,6 +91,9 @@ public class SpeciesListStage implements AdventureStage {
      * If there is no similarity, it should return 0.
      */
     public static int arraySimilarity(List<String> listOne, List<String> listTwo) {
+        if(listOne.isEmpty() && listTwo.isEmpty()){//should add this special situation
+            return 1;
+        }
         List<String> copy = new ArrayList<>(listOne);
         int similarObjects = 0;
         for (String o : listTwo) {
