@@ -37,7 +37,7 @@ public class ArrayDeque61BTest {
      }
 
      @Test
-    public void testresize(){
+     public void testresize(){
          ArryDeque61B<Integer> a1 = new ArryDeque61B<>();
          assertThat(a1.size()).isEqualTo(8);
          a1.addFirst(2);
@@ -53,5 +53,13 @@ public class ArrayDeque61BTest {
 
          assertThat(a1.size()).isEqualTo(16);
          assertThat(a1.toList()).containsExactly(11,4,15,17,7,3,2,9,6,5).inOrder();
+     }
+
+     @Test
+     public void testisEmpty(){
+         ArryDeque61B<Integer> a1 = new ArryDeque61B<>();
+         assertThat(a1.isEmpty()).isTrue();
+         a1.addFirst(1);
+         assertThat(a1.isEmpty()).isFalse();
      }
 }
