@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArryDeque61B<T> implements Deque61B<T> {
+public class ArrayDeque61B<T> implements Deque61B<T> {
     private T[] item;
     private int size;
     private int max_size;
@@ -41,7 +41,7 @@ public class ArryDeque61B<T> implements Deque61B<T> {
         item = new_item;
     }
 
-    public ArryDeque61B(){
+    public ArrayDeque61B(){
         max_size = 8;
         item = (T[]) new Object[max_size];
         size = 0;

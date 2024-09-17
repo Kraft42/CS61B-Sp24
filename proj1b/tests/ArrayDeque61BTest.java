@@ -10,19 +10,19 @@ import static com.google.common.truth.Truth.assertWithMessage;
 
 public class ArrayDeque61BTest {
 
-//     @Test
-//     @DisplayName("ArrayDeque61B has no fields besides backing array and primitives")
-//     void noNonTrivialFields() {
-//         List<Field> badFields = Reflection.getFields(ArrayDeque61B.class)
-//                 .filter(f -> !(f.getType().isPrimitive() || f.getType().equals(Object[].class) || f.isSynthetic()))
-//                 .toList();
-//
-//         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
-//     }
+     @Test
+     @DisplayName("ArrayDeque61B has no fields besides backing array and primitives")
+     void noNonTrivialFields() {
+         List<Field> badFields = Reflection.getFields(ArrayDeque61B.class)
+                 .filter(f -> !(f.getType().isPrimitive() || f.getType().equals(Object[].class) || f.isSynthetic()))
+                 .toList();
+
+         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
+     }
 
      @Test
      public void addFirstAndaddLasttest(){
-         ArryDeque61B<Integer> a1 = new ArryDeque61B<>();
+         ArrayDeque61B<Integer> a1 = new ArrayDeque61B<>();
          assertThat(a1.size()).isEqualTo(0);
          a1.addFirst(2);
          a1.addFirst(3);
@@ -38,7 +38,7 @@ public class ArrayDeque61BTest {
 
      @Test
      public void testresizeup(){
-         ArryDeque61B<Integer> a1 = new ArryDeque61B<>();
+         ArrayDeque61B<Integer> a1 = new ArrayDeque61B<>();
          a1.addFirst(2);
          a1.addFirst(3);
          a1.addLast(9);
@@ -56,7 +56,7 @@ public class ArrayDeque61BTest {
 
      @Test
      public void testisEmpty(){
-         ArryDeque61B<Integer> a1 = new ArryDeque61B<>();
+         ArrayDeque61B<Integer> a1 = new ArrayDeque61B<>();
          assertThat(a1.isEmpty()).isTrue();
          a1.addFirst(1);
          assertThat(a1.isEmpty()).isFalse();
@@ -64,7 +64,7 @@ public class ArrayDeque61BTest {
 
      @Test
      public void testget(){
-         ArryDeque61B<Integer> a1 = new ArryDeque61B<>();
+         ArrayDeque61B<Integer> a1 = new ArrayDeque61B<>();
          a1.addFirst(2);
          a1.addFirst(3);
          a1.addLast(9);
@@ -83,7 +83,7 @@ public class ArrayDeque61BTest {
 
      @Test
      public void RemoveFirstAndRemoveLasttest(){
-         ArryDeque61B<String> a1 = new ArryDeque61B<>();
+         ArrayDeque61B<String> a1 = new ArrayDeque61B<>();
          a1.addFirst("a");
          a1.addFirst("c");
          a1.addLast("f");
@@ -104,7 +104,7 @@ public class ArrayDeque61BTest {
 
      @Test
      public void testresizedown(){
-         ArryDeque61B<String> a1 = new ArryDeque61B<>();
+         ArrayDeque61B<String> a1 = new ArrayDeque61B<>();
          for(int i = 0;i<20;i++){
              a1.addLast("a");
          }
