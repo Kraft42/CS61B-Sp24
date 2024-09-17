@@ -1,65 +1,88 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArryDeque61B<T> implements Deque61B<T> {
-    private T[] arr;
+    private T[] item;
     private int size;
-    private int contain;
+    private int max_size;
     private int nextFirst,nextLast;
 
-    private void resize(){
-        T[] new_arr = (T[]) new Object[size*2];
-        for(int i = 0;i < size*2;i++){
-            if(i<=nextFirst){
-                new_arr[i] = arr[i];
-            }
-            else{
-                i = i+size;
-                new_arr[i] = arr[i-size];
-            }
+    public int getMax_size(){
+        return max_size;
+    }
+
+    private void resize_up(){
+        max_size = max_size*2;
+        T[] new_item = (T[]) new Object[max_size];
+
+        int index = Math.floorMod(nextFirst+1,size);
+        for(int i = 0;i<size;i++){
+            new_item[i] = item[index];
+            index = Math.floorMod(index+1,size);
         }
 
-        arr = new_arr;
-        contain = size;
-        nextFirst = nextFirst+size;
-        size = size*2;
+        nextFirst = Math.floorMod(-1,max_size);
+        nextLast = Math.floorMod(size,max_size);
+        item = new_item;
+    }
+
+    private  void resize_down(){
+        max_size = max_size/2;
+        T[] new_item = (T[]) new Object[max_size];
+
+        int index = Math.floorMod(nextFirst+1,size);
+        for(int i = 0;i<size;i++){
+            new_item[i] = item[index];
+            index = Math.floorMod(index+1,size);
+        }
+
+        nextFirst = Math.floorMod(-1,max_size);
+        nextLast = Math.floorMod(size,max_size);
+        item = new_item;
     }
 
     public ArryDeque61B(){
-        arr = (T[]) new Object[8];
-        size = 8;
-        contain = size;
+        max_size = 8;
+        item = (T[]) new Object[max_size];
+        size = 0;
         nextFirst = 4;
         nextLast = 5;
     }
 
     @Override
     public void addFirst(T x) {
-        if(contain == 0){
-            resize();
+        if(size == max_size){
+            resize_up();
         }
-        arr[nextFirst] = x;
-        nextFirst = Math.floorMod(nextFirst-1,size);
-        contain--;
+        item[nextFirst] = x;
+        nextFirst = Math.floorMod(nextFirst-1,max_size);
+        size++;
     }
 
     @Override
     public void addLast(T x) {
-        if(contain == 0){
-            resize();
+        if(size == max_size){
+            resize_up();
         }
-        arr[nextLast] = x;
-        nextLast = Math.floorMod(nextLast+1,size);
-        contain--;
+        item[nextLast] = x;
+        nextLast = Math.floorMod(nextLast+1,max_size);
+        size++;
     }
 
     @Override
     public List<T> toList() {
-        return List.of();
+        List<T> returnList = new ArrayList<>();
+        int index = Math.floorMod(nextFirst+1,max_size);
+        for(int i = 0;i<size;i++){
+            returnList.add(item[index]);
+            index = Math.floorMod(index+1,max_size);
+        }
+        return returnList;
     }
 
     @Override
     public boolean isEmpty() {
-        return contain == size;
+        return size == 0;
     }
 
     @Override
@@ -69,11 +92,21 @@ public class ArryDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T removeFirst() {
+        while(size <= max_size*0.25){
+            resize_down();
+        }
+        nextFirst = Math.floorMod(nextFirst+1,max_size);
+        size--;
         return null;
     }
 
     @Override
     public T removeLast() {
+        while (size <= max_size*0.25){
+            resize_down();
+        }
+        nextLast = Math.floorMod(nextLast-1,max_size);
+        size--;
         return null;
     }
 
@@ -82,13 +115,11 @@ public class ArryDeque61B<T> implements Deque61B<T> {
         if(index<0||index>=size){
             return null;
         }
-        for(int i = 0;i<size;i++){
-
-        }
+        return item[Math.floorMod(nextFirst+1+index,max_size)];
     }
 
     @Override
     public T getRecursive(int index) {
-        return null;
+        throw new UnsupportedOperationException("No need to implement getRecursive for proj 1b");
     }
 }
