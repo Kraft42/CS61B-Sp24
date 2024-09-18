@@ -174,4 +174,9 @@ public class ArrayDeque61B<T> implements Deque61B<T>,Iterable<T> {
         }
         return false;
     }
+
+    @Override
+    public String toString(){
+        return toList().toString();
+    }
 }
