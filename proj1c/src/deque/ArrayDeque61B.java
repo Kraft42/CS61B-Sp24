@@ -149,4 +149,29 @@ public class ArrayDeque61B<T> implements Deque61B<T>,Iterable<T> {
             return return_item;
         }
     }
+
+    public boolean contain(T x){
+        for(T i:this){
+            if(i == x){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof ArrayDeque61B other){
+            if(this.size != other.size){
+                return false;
+            }
+            for(T i:this){
+                if(!other.contain(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

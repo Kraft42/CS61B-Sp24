@@ -3,6 +3,7 @@ package deque;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class LinkedListDeque61B <T> implements Deque61B<T>,Iterable<T>{
     @Override
@@ -142,6 +143,31 @@ public class LinkedListDeque61B <T> implements Deque61B<T>,Iterable<T>{
 
         DequeNode ptr = sentinel.next;
         return getRecursiveHelper(ptr,index);
+    }
+
+    public boolean contain(T x){
+        for(T i:this){
+            if(i == x){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof LinkedListDeque61B other){
+            if(other.size != this.size){
+                return false;
+            }
+            for(T i:this){
+                if(!other.contain(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
 
