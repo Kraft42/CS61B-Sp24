@@ -42,7 +42,7 @@ public class GuitarString {
         for(int i = 0;i < buffer.size();i++){
             buffer.removeFirst();
             double r = Math.random() - 0.5;
-            buffer.addFirst(r);
+            buffer.addLast(r);
         }
     }
 
