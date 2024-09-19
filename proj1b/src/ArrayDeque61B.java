@@ -92,22 +92,30 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T removeFirst() {
+        if(isEmpty()){
+            return null;
+        }
         while(size <= max_size*0.25){
             resize_down();
         }
+        T first = get(0);
         nextFirst = Math.floorMod(nextFirst+1,max_size);
         size--;
-        return null;
+        return first;
     }
 
     @Override
     public T removeLast() {
+        if(isEmpty()){
+            return null;
+        }
         while (size <= max_size*0.25){
             resize_down();
         }
+        T last = get(size-1);
         nextLast = Math.floorMod(nextLast-1,max_size);
         size--;
-        return null;
+        return last;
     }
 
     @Override

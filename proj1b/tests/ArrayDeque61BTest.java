@@ -96,10 +96,13 @@ public class ArrayDeque61BTest {
          a1.addFirst("k");
 
          assertThat(a1.toList()).containsExactly("k","t","c","a","f","h","q","s","b","l").inOrder();
-         a1.removeFirst();
-         a1.removeLast();
+         assertThat(a1.removeFirst()).isEqualTo("k");
+         assertThat(a1.removeLast()).isEqualTo("l");
          assertThat(a1.toList()).containsExactly("t","c","a","f","h","q","s","b").inOrder();
          assertThat(a1.size()).isEqualTo(8);
+
+         ArrayDeque61B<String> a2 = new ArrayDeque61B<>();
+         assertThat(a2.removeFirst()).isEqualTo(null);
      }
 
      @Test
