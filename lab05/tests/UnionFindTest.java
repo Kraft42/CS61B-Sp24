@@ -85,7 +85,86 @@ public class UnionFindTest {
      * Specifically, you may want to write a test for path compression and to check for the correctness
      * of all methods in your implementation.
      */
+    @Test
+    public void testCreate(){
+        UnionFind u1 = new UnionFind(5);
 
+        for(int i = 0;i < 5;i++) {
+            assertThat(u1.sizeOf(i)).isEqualTo(1);
+            assertThat(u1.parent(i)).isEqualTo(-1);
+        }
+    }
+
+    @Test
+    public void testSzieOf(){
+        UnionFind u1 = new UnionFind(8);
+        u1.union(0,1);
+        u1.union(0,2);
+        u1.union(2,7);
+        u1.union(3,4);
+        u1.union(5,6);
+
+        assertThat(u1.sizeOf(2)).isEqualTo(4);
+        assertThat(u1.sizeOf(3)).isEqualTo(2);
+        assertThat(u1.sizeOf(5)).isEqualTo(2);
+    }
+
+    @Test
+    public void testParent(){
+        UnionFind u1 = new UnionFind(8);
+        u1.union(0,1);
+        u1.union(0,2);
+        u1.union(2,7);
+        u1.union(3,4);
+
+        assertThat(u1.parent(0)).isEqualTo(1);
+        assertThat(u1.parent(2)).isEqualTo(1);
+        assertThat(u1.parent(5)).isEqualTo(-1);
+    }
+
+    @Test
+    public void testConneccted(){
+        UnionFind u1 = new UnionFind(8);
+        u1.union(0,1);
+        u1.union(0,2);
+        u1.union(2,7);
+        u1.union(3,4);
+
+        assertThat(u1.connected(1,1)).isTrue();
+        assertThat(u1.connected(1,7)).isTrue();
+        assertThat(u1.connected(2,3)).isFalse();
+    }
+
+    @Test
+    public void testPath_Compressed(){
+        UnionFind u1 = new UnionFind(8);
+        u1.union(0,1);
+        u1.union(0,2);
+        u1.union(2,7);
+        u1.union(3,4);
+        u1.union(5,6);
+        u1.union(3,5);
+        u1.union(2,5);
+
+        u1.find(0);
+        assertThat(u1.parent(0)).isEqualTo(6);
+
+        u1.find(3);
+        assertThat(u1.parent(3)).isEqualTo(6);
+
+        UnionFind u2 = new UnionFind(8);
+        u2.union(1,0);
+        u2.union(3,2);
+        u2.union(5,4);
+        u2.union(7,6);
+        u2.union(7,5);
+        u2.union(3,1);
+        u2.union(4,0);
+
+        u2.find(7);
+        assertThat(u2.parent(7)).isEqualTo(0);
+        assertThat(u2.parent(6)).isEqualTo(0);
+    }
 }
 
 
