@@ -82,7 +82,30 @@ public class PercolationTest {
     //       write some more tests and delete the fail() line
     @Test
     public void yourFirstTestHere() {
-        fail("Did you write your own tests?");
+        int N = 5;
+        Percolation p = new Percolation(N);
+        int[][] openSites = {
+                {4, 1},
+                {3, 1},
+                {2, 1},
+                {2, 2},
+                {2, 3},
+                {2, 4},
+                {1, 3},
+                {0, 3}
+        };
+        Cell[][] expectedState = {
+                {Cell.CLOSED, Cell.CLOSED, Cell.CLOSED, Cell.FULL, Cell.CLOSED},
+                {Cell.CLOSED, Cell.CLOSED, Cell.CLOSED, Cell.FULL, Cell.CLOSED},
+                {Cell.CLOSED, Cell.FULL, Cell.FULL, Cell.FULL, Cell.FULL},
+                {Cell.CLOSED, Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+                {Cell.CLOSED, Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED}
+        };
+        for (int[] site : openSites) {
+            p.open(site[0], site[1]);
+        }
+        assertThat(getState(N, p)).isEqualTo(expectedState);
+        assertThat(p.percolates()).isTrue();
     }
 
 }
