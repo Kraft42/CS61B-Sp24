@@ -113,31 +113,56 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
 
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        if(!containsKey(key))
+            return null;
+        V result = get(key);
+        root = remove_helper(root,key);
+        size--;
+        return result;
     }
 
     private BSTNode remove_helper(BSTNode t,K key){
         if(t == null)
             return null;
 
-        if(key.compareTo(t.key) == 0)
-            return t;
-        else if(key.compareTo(t.key) > 0)
-            return remove_helper(t.right,key);
-        else if(key.compareTo(t.key) < 0)
-            return remove_helper(t.left,key);
+        if(key.compareTo(t.key) < 0){
+            t.left = remove_helper(t.left,key);
+        }
+        else if(key.compareTo(t.key) > 0){
+            t.right = remove_helper(t.right,key);
+        }
+        else{
+            if(t.right == null){
+                return t.left;
+            }
+            else if(t.left == null){
+                return t.right;
+            }
+            BSTNode r = findMaxInLeft(t);
+            t.key = r.key;
+            t.value = r.value;
+            t.left = remove_helper(t.left,r.key);
+        }
+        return t;
+    }
 
-        return null;
+    private BSTNode findMaxInLeft(BSTNode t){
+        BSTNode m = t.left;
+        while(m.right != null){
+            m = m.right;
+        }
+
+        return m;
     }
 
     private class BSTMapiterator implements Iterator<K>{
-        private Stack<BSTNode> BSTStake = new Stack<>();
+        public Stack<BSTNode> BSTStake = new Stack<>();
 
         public BSTMapiterator(){
             Push_Left(root);
         }
 
-        private void Push_Left(BSTNode t){
+        public void Push_Left(BSTNode t){
             while (t != null){
                 BSTStake.push(t);
                 t = t.left;
