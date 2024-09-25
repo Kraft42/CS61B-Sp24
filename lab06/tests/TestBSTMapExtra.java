@@ -25,6 +25,20 @@ public class TestBSTMapExtra {
         assertThat(keySet).containsExactlyElementsIn(values).inOrder();
     }
 
+    @Test
+    public void MyKeySetTest() {
+        BSTMap<Integer, Integer> b = new BSTMap<>();
+        TreeSet<Integer> values = new TreeSet<>();
+        for (int i = 0; i < 455; i++) {
+            b.put(454 - i, 1);
+            values.add(i);
+        }
+        assertThat(b.size()).isEqualTo(455); //keys are there
+        Set<Integer> keySet = b.keySet();
+        assertThat(values).containsExactlyElementsIn(keySet).inOrder();
+        assertThat(keySet).containsExactlyElementsIn(values).inOrder();
+    }
+
     /* Remove Test
      *
      * Note for testRemoveRoot:

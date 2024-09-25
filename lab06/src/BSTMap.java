@@ -1,6 +1,7 @@
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
     private class BSTNode{
@@ -101,21 +102,18 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
 
     @Override
     public Set<K> keySet() {
-//        throw new UnsupportedOperationException();
-
         Set<K> result = new HashSet<>();
+
+        for(K key: this){
+            result.add(key);
+        }
+
         return result;
     }
 
     @Override
     public V remove(K key) {
-        BSTNode r_n = remove_helper(root,key);
-
-        if(r_n == null)
-            return null;
-        else {
-            if()
-        }
+        throw new UnsupportedOperationException();
     }
 
     private BSTNode remove_helper(BSTNode t,K key){
@@ -132,12 +130,35 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
         return null;
     }
 
-    @Override
-    public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+    private class BSTMapiterator implements Iterator<K>{
+        private Stack<BSTNode> BSTStake = new Stack<>();
+
+        public BSTMapiterator(){
+            Push_Left(root);
+        }
+
+        private void Push_Left(BSTNode t){
+            while (t != null){
+                BSTStake.push(t);
+                t = t.left;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !BSTStake.empty();
+        }
+
+        @Override
+        public K next() {
+            BSTNode node = BSTStake.pop();
+            Push_Left(node.right);
+            return node.key;
+        }
     }
 
-    public void printInOrder(){
-
+    @Override
+    public Iterator<K> iterator() {
+        return new BSTMapiterator();
     }
 }
