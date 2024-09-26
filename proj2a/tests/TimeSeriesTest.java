@@ -55,4 +55,35 @@ public class TimeSeriesTest {
         assertThat(totalPopulation.years()).isEmpty();
         assertThat(totalPopulation.data()).isEmpty();
     }
+
+    @Test void testData(){
+        TimeSeries catPopulation = new TimeSeries();
+        catPopulation.put(1991, 0.0);
+        catPopulation.put(1992, 100.0);
+        catPopulation.put(1994, 200.0);
+        catPopulation.put(1996,350.0);
+
+        TimeSeries dogPopulation = new TimeSeries();
+        dogPopulation.put(1993,300.0);
+        dogPopulation.put(1994, 400.0);
+        dogPopulation.put(1995, 500.0);
+        dogPopulation.put(1997,650.0);
+
+        TimeSeries totalPopulation = catPopulation.plus(dogPopulation);
+        // expected: 1991: 0,
+        //           1992: 100
+        //           1993: 300
+        //           1994: 600
+        //           1995: 500
+        //           1996: 350
+        //           1887: 650
+
+        List<Integer> expectedYears = totalPopulation.years();
+        List<Double> expectedData = new ArrayList<>();
+        for(int y:expectedYears){
+            expectedData.add(totalPopulation.get(y));
+        }
+
+        assertThat(totalPopulation.data()).isEqualTo(expectedData);
+    }
 } 

@@ -1,6 +1,8 @@
 package ngrams;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -31,6 +33,9 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         // TODO: Fill in this constructor.
+        for(int i = startYear;i <= endYear;i++){
+            this.put(i,ts.get(i));
+        }
     }
 
     /**
@@ -38,7 +43,12 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Integer> years() {
         // TODO: Fill in this method.
-        return null;
+        List<Integer> year = new ArrayList<>();
+        Set<Integer> temp = this.keySet();
+        for(int i:temp){
+            year.add(i);
+        }
+        return year;
     }
 
     /**
@@ -47,7 +57,11 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Double> data() {
         // TODO: Fill in this method.
-        return null;
+        List<Double> d = new ArrayList<>();
+        for(int i:years()){
+            d.add(get(i));
+        }
+        return d;
     }
 
     /**
@@ -61,7 +75,25 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries newTimeseries = new TimeSeries();
+        if(ts.isEmpty() && this.isEmpty())
+            return newTimeseries;
+
+        for(int y:this.years()){
+            newTimeseries.put(y,this.get(y));
+        }
+
+        for(int y:ts.years()){
+            if(newTimeseries.containsKey(y)){
+                double prev = newTimeseries.get(y);
+                newTimeseries.put(y,prev + ts.get(y));
+            }
+            else {
+                newTimeseries.put(y,ts.get(y));
+            }
+        }
+
+        return newTimeseries;
     }
 
     /**
@@ -75,7 +107,14 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries newTimeseries = new TimeSeries();
+
+        for(int y:this.years()){
+            if(!ts.containsKey(y))
+                throw new IllegalArgumentException();
+            newTimeseries.put(y,this.get(y)/ts.get(y));
+        }
+        return newTimeseries;
     }
 
     // TODO: Add any private helper methods.
