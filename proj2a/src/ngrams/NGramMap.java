@@ -27,8 +27,8 @@ public class NGramMap {
         public WordSeries(){super();}
     }
 
-    private WordSeries own;
-    private TimeSeries yeardata;
+    private WordSeries ownWordSeries;
+    private TimeSeries YearDatas;
 
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
@@ -37,26 +37,26 @@ public class NGramMap {
         // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
         In wordFilein = new In(wordsFilename);
         In countsFilein = new In(countsFilename);
-        own = new WordSeries();
-        yeardata = new TimeSeries();
+        ownWordSeries = new WordSeries();
+        YearDatas = new TimeSeries();
 
         while(!wordFilein.isEmpty()){
             String nextLine = wordFilein.readLine();
             String[] splitLine = nextLine.split("\t");
-            if(!own.containsKey(splitLine[0])){
+            if(!ownWordSeries.containsKey(splitLine[0])){
                 TimeSeries temp = new TimeSeries();
                 temp.put(Integer.parseInt(splitLine[1]),Double.parseDouble(splitLine[2]));
-                own.put(splitLine[0],temp);
+                ownWordSeries.put(splitLine[0],temp);
             }
             else{
-                own.get(splitLine[0]).put(Integer.parseInt(splitLine[1]),Double.parseDouble(splitLine[2]));
+                ownWordSeries.get(splitLine[0]).put(Integer.parseInt(splitLine[1]),Double.parseDouble(splitLine[2]));
             }
         }
 
         while (!countsFilein.isEmpty()){
             String nextLine = countsFilein.readLine();
             String[] splitLine = nextLine.split(",");
-            yeardata.put(Integer.parseInt(splitLine[0]),Double.parseDouble(splitLine[1]));
+            YearDatas.put(Integer.parseInt(splitLine[0]),Double.parseDouble(splitLine[1]));
         }
     }
 
@@ -71,7 +71,7 @@ public class NGramMap {
         // TODO: Fill in this method.
         TimeSeries result = new TimeSeries();
         for(int y = startYear;y <= endYear;y++){
-            double data = own.get(word).get(y);
+            double data = ownWordSeries.get(word).get(y);
             result.put(y,data);
         }
         return result;
@@ -86,7 +86,7 @@ public class NGramMap {
     public TimeSeries countHistory(String word) {
         // TODO: Fill in this method.
         TimeSeries result = new TimeSeries();
-        TimeSeries Origin = own.get(word);
+        TimeSeries Origin = ownWordSeries.get(word);
         List<Integer> yearsList = Origin.years();
         for(int y:yearsList){
             result.put(y,Origin.get(y));
@@ -99,20 +99,7 @@ public class NGramMap {
      */
     public TimeSeries totalCountHistory() {
         // TODO: Fill in this method.
-        TimeSeries result = new TimeSeries();
-        Set<String> wordsSet = own.keySet();
-        for(String w:wordsSet){
-            TimeSeries w_v = own.get(w);
-            List<Integer> w_y = w_v.years();
-            for(int y:w_y){
-                if(result.containsKey(y)){
-                    result.put(y,result.get(y) + 1.0);
-                }
-                else {
-                    result.put(y,1.0);
-                }
-            }
-        }
+        TimeSeries result = YearDatas;
         return result;
     }
 
@@ -124,9 +111,9 @@ public class NGramMap {
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
         // TODO: Fill in this method.
         TimeSeries result = new TimeSeries();
-        TimeSeries wordTimeSeries = own.get(word);
+        TimeSeries wordTimeSeries = ownWordSeries.get(word);
         for(int i = startYear;i <= endYear;i++){
-            result.put(i,wordTimeSeries.get(i)/yeardata.get(i));
+            result.put(i,wordTimeSeries.get(i)/ YearDatas.get(i));
         }
         return result;
     }
@@ -139,10 +126,10 @@ public class NGramMap {
     public TimeSeries weightHistory(String word) {
         // TODO: Fill in this method.
         TimeSeries result = new TimeSeries();
-        TimeSeries wordTimeSeries = own.get(word);
+        TimeSeries wordTimeSeries = ownWordSeries.get(word);
         List<Integer> yearsList = wordTimeSeries.years();
         for(int y:yearsList){
-            result.put(y,wordTimeSeries.get(y)/yeardata.get(y));
+            result.put(y,wordTimeSeries.get(y)/ YearDatas.get(y));
         }
         return result;
     }
