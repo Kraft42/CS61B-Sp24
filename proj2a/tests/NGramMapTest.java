@@ -44,6 +44,14 @@ public class NGramMapTest {
     }
 
     @Test
+    public void testWordNotInFile(){
+        NGramMap ngm = new NGramMap(SHORT_WORDS_FILE, TOTAL_COUNTS_FILE);
+
+        assertThat(ngm.weightHistory("invalid")).isEqualTo(new TimeSeries());
+        assertThat(ngm.countHistory("invalid")).isEqualTo(new TimeSeries());
+    }
+
+    @Test
     public void testOnLargeFile() {
         // creates an NGramMap from a large dataset
         NGramMap ngm = new NGramMap(TOP_14337_WORDS_FILE,

@@ -87,6 +87,8 @@ public class NGramMap {
         // TODO: Fill in this method.
         TimeSeries result = new TimeSeries();
         TimeSeries Origin = ownWordSeries.get(word);
+        if(Origin == null)
+            return result;
         List<Integer> yearsList = Origin.years();
         for(int y:yearsList){
             result.put(y,Origin.get(y));
@@ -127,6 +129,8 @@ public class NGramMap {
         // TODO: Fill in this method.
         TimeSeries result = new TimeSeries();
         TimeSeries wordTimeSeries = ownWordSeries.get(word);
+        if(wordTimeSeries == null)
+            return result;
         List<Integer> yearsList = wordTimeSeries.years();
         for(int y:yearsList){
             result.put(y,wordTimeSeries.get(y)/ YearDatas.get(y));
