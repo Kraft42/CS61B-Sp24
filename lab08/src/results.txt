@@ -1,0 +1,27 @@
+InsertRandomSpeedTest
+Enter # strings to insert into ULLMap: 100000
+--Stack Overflow -- couldn't add 100000 strings of length 6.
+
+Enter # strings to insert into your MyHashMap: 100000
+MyHashMap: 0.06 sec
+
+Enter # strings to insert into Java's HashMap: 100000
+Java's Built-in HashMap: 0.02 sec
+
+InsertInOrderSpeedTest
+Enter # strings to insert into ULLMap: 100000
+--Stack Overflow -- couldn't add 100000 strings.
+
+Enter # strings to insert into MyHashMap: 100000
+MyHashMap: 0.07 sec
+
+Enter # strings to insert into Java's HashMap: 100000
+Java's Built-in HashMap: 0.06 sec
+
+BucketsSpeedTest
+Enter # strings to insert into each map: 2000000
+MyHashMap with ArrayList buckets: 2.18 sec
+MyHashMap with LinkedList buckets: 2.02 sec
+MyHashMap with HashSet buckets: 2.76 sec
+MyHashMap with Stack buckets: 2.22 sec
+MyHashMap with ArrayDeque buckets: 2.02 sec
